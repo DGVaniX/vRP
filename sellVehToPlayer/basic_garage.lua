@@ -1,3 +1,5 @@
+MySQL.createCommand("vRP/sell_vehicle_player","UPDATE vrp_user_vehicles SET user_id = @user_id, vehicle_plate = @registration WHERE user_id = @oldUser AND vehicle = @vehicle")
+
 -- sell vehicle
 veh_actions[lang.vehicle.sellTP.title()] = {function(playerID,player,vtype,name)
 	if playerID ~= nil then
