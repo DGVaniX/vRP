@@ -1,4 +1,3 @@
-
 vehicle = {
     title = "Vehicle",
     no_owned_near = "~r~No owned vehicle near.",
