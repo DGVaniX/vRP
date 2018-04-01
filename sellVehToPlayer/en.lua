@@ -39,8 +39,8 @@ vehicle = {
       title = "Repair vehicle",
       description = "Repair the nearest vehicle."
     },
-	sellTP = {
-		title = "Sell To Player",
-		description = "Sell the nearest vehicle to a player."
-	}
+    sellTP = {
+	title = "Sell To Player",
+	description = "Sell the nearest vehicle to a player."
+    }
   },
