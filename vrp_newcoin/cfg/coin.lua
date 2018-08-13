@@ -19,7 +19,7 @@ cfg.display_css = [[
 }
 
 .div_coins .symbol{
-	content: url('LINK LA ICONITA AICI'); 
+	content: url('ICON .PNG URL'); 
 	display: inline-flex;
 	width: 23px;
 	height: 23px;
