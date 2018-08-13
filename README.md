@@ -6,7 +6,7 @@ Why buy the scripts from some idiot that only knows how to steal, instead of get
 
 
 # Scripts made for XtremeZone server 
-http://xtremezone.ro
+http://xtremezone.pro
 
 
 <h1>Paid Scripts</h1>
