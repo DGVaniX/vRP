@@ -7,9 +7,9 @@ vRPnc = Proxy.getInterface("vRP_newcoin")
 
 -- > EXAMPLE
 
-vRPnc.giveCoins(player, 100) -- Give the player 100 coins
-vRPnc.takeCoins(player, 100) -- Take 100 coins from the player
-local coins = vRPnc.getCoins(player) -- Get the number of coins that the player has
+vRPnc.giveCoins({player, 100}) -- Give the player 100 coins
+vRPnc.takeCoins({player, 100}) -- Take 100 coins from the player
+local coins = vRPnc.getCoins({player}) -- Get the number of coins that the player has
 
 
 -- > HOW TO
