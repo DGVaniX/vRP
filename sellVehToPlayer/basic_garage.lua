@@ -19,7 +19,7 @@ veh_actions[lang.vehicle.sellTP.title()] = {function(playerID,player,vtype,name)
 								if (tonumber(amount)) and (tonumber(amount) > 0) then
 									MySQL.query("vRP/get_vehicle", {user_id = user_id, vehicle = name}, function(pvehicle, affected)
 										if #pvehicle > 0 then
-											vRPclient.notify(player,{"~r~The player already has this vehicle type."})
+									              	vRPclient.notify(player,{"~r~The player already has this vehicle type."})
 										else
 											local tmpdata = vRP.getUserTmpTable(playerID)
 											if tmpdata.rent_vehicles[name] == true then
