@@ -71,7 +71,7 @@ local function ch_removeFromFaction(player,choice)
 end
 
 vRP.registerMenuBuilder({"main", function(add, data)
-	local user_id = vRP.getUserId(data.player)
+	local user_id = vRP.getUserId({data.player})
 	if user_id ~= nil then
 		local choices = {}
 		for i, v in pairs(factions) do
@@ -86,7 +86,7 @@ vRP.registerMenuBuilder({"main", function(add, data)
 						menu.onclose = function(player) vRP.openMainMenu({player}) end
 						menu["Invite Member"] = {ch_inviteInFaction, "Invite member in "..groupName}
 						menu["Kick Member"] = {ch_removeFromFaction, "Kick member out of "..groupName}
-						vRP.openMenu(player,menu)
+						vRP.openMenu({player,menu})
 					end})
 				end, "Leader menu for faction "..groupName}
 			end
