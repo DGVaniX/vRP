@@ -58,7 +58,7 @@ function vRPnc.takeCoins(user_id,amount)
 	vRPnc.setCoins(user_id,newCoins)
 end
 
-function vRP.tryCoinPayment(user_id,amount)
+function vRPnc.tryCoinPayment(user_id,amount)
 	local coins = vRP.getCoins(user_id)
 	if coins >= amount then
 		vRP.setCoins(user_id,coins-amount)
