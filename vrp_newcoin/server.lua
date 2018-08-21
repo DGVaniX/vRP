@@ -112,14 +112,14 @@ local function givePlayerCoins(player,choice)
 				if(tonumber(coins))then
 					coins = tonumber(coins)
 					vRPnc.giveCoins(user_id,coins)
-					vRPclient.notify(player, {"~g~I-ai dat lui ~w~"..GetPlayerName(target).." ~w~"..coins.." ~g~coins"})
-					vRPclient.notify(target, {"~w~"..GetPlayerName(player).."~g~ ti-a dat ~w~"..coins.." ~g~coins"})
+					vRPclient.notify(player, {"~g~You gave ~w~"..GetPlayerName(target).." ~w~"..coins.." ~g~coins"})
+					vRPclient.notify(target, {"~w~"..GetPlayerName(player).."~g~ gave you ~w~"..coins.." ~g~coins"})
 				else
-					vRP.notify(player, {"~r~Coinsurile trebuie sa fie un numar!"})
+					vRP.notify(player, {"~r~Number has to be a number!"})
 				end
 			end})
 		else
-			vRPclient.notify(player, {"~r~Jucatorul nu a fost gasit!"})
+			vRPclient.notify(player, {"~r~Player not online!"})
 		end
 	end})
 end
@@ -136,17 +136,17 @@ local function takePlayerCoins(player,choice)
 					coins = tonumber(coins)
 					if(tCoins >= coins)then
 						vRPnc.takeCoins(user_id,coins)
-						vRPclient.notify(player, {"~g~Ai luat de la ~w~"..GetPlayerName(target).." ~w~"..coins.." ~g~coins"})
-						vRPclient.notify(target, {"~w~"..GetPlayerName(player).."~g~ a luat de la tine ~w~"..coins.." ~g~coins"})
+						vRPclient.notify(player, {"~g~You took ~w~"..GetPlayerName(target).." ~w~"..coins.." ~g~coins"})
+						vRPclient.notify(target, {"~w~"..GetPlayerName(player).."~g~ took ~w~"..coins.." ~g~coins from you"})
 					else
-						vRPclient.notify(player, {"~r~Jucatorul are doar ~w~"..tCoins.." ~g~Coins"})
+						vRPclient.notify(player, {"~r~Player only has ~w~"..tCoins.." ~g~Coins"})
 					end
 				else
-					vRPclient.notify(player, {"~r~Coinsurile trebuie sa fie un numar!"})
+					vRPclient.notify(player, {"~r~Number has to be a number!"})
 				end
 			end})
 		else
-			vRPclient.notify(player, {"~r~Jucatorul nu a fost gasit!"})
+			vRPclient.notify(player, {"~r~Player not online!"})
 		end
 	end})
 end
