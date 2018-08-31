@@ -11,7 +11,6 @@
 	https://discord.gg/a8KBSA4
 --]]
 
-checkTime = 60 --Minutes
 deleteTime = 45 --Seconds
 
 local enumerator = {
@@ -52,7 +51,6 @@ end
 
 RegisterNetEvent('vrp_cleanupthissit')
 AddEventHandler('vrp_cleanupthissit', function()
-  Wait(checkTime * 60000)
   TriggerEvent("chatMessage", "[SERVER]", {255, 255, 0}, "All unoccupied vehicles will be deleted in "..deleteTime.." seconds!")
   Wait(deleteTime * 60000)
   local theVehicles = getVehicles()
