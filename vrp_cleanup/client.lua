@@ -52,7 +52,7 @@ end
 RegisterNetEvent('vrp_cleanupthissit')
 AddEventHandler('vrp_cleanupthissit', function()
   TriggerEvent("chatMessage", "[SERVER]", {255, 255, 0}, "All unoccupied vehicles will be deleted in "..deleteTime.." seconds!")
-  Wait(deleteTime * 60000)
+  Wait(deleteTime * 1000)
   local theVehicles = getVehicles()
   TriggerEvent("chatMessage", "[SERVER]", {0, 255, 0}, "All unoccupied vehicles have been deleted!")
   for veh in theVehicles do
