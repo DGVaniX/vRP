@@ -1,10 +1,18 @@
 --[[
 	SCRIPTER: DGVaniX [ DGVaniX#0096 ] 
 	WEBSITE: http://vanix.market
+	
+
+	Updated By 
+	
+	DoubleRepo AKA 
+	TheFlyingDutchMan AKA 
+	Mr'SuicideSheep#8623
+	https://discord.gg/a8KBSA4
 --]]
 
-checkTime = 10 --Minutes
-deleteTime = 30 --Seconds
+checkTime = 60 --Minutes
+deleteTime = 45 --Seconds
 
 local enumerator = {
 	__gc = function(enum)
@@ -42,20 +50,25 @@ function getVehicles()
   return getEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
 end
 
+RegisterNetEvent('vrp_cleanupthissit')
+AddEventHandler('vrp_cleanupthissit', function()
+  Wait(checkTime * 60000)
+  TriggerEvent("chatMessage", "[SERVER]", {255, 255, 0}, "All unoccupied vehicles will be deleted in "..deleteTime.." seconds!")
+  Wait(deleteTime * 60000)
+  local theVehicles = getVehicles()
+  TriggerEvent("chatMessage", "[SERVER]", {0, 255, 0}, "All unoccupied vehicles have been deleted!")
+  for veh in theVehicles do
+	if ( DoesEntityExist( veh ) ) then 
+	  if((GetPedInVehicleSeat(veh, -1)) == false) or ((GetPedInVehicleSeat(veh, -1)) == nil) or ((GetPedInVehicleSeat(veh, -1)) == 0)then
+		Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( veh ) )
+	  end
+	end
+  end
+end)
+
 Citizen.CreateThread(function()
 	while true do
-		Wait(checkTime * 60000)
-		TriggerEvent("chatMessage", "[SERVER]", {255, 255, 0}, "All unoccupied vehicles will be deleted in "..deleteTime.." seconds!")
-		SetTimeout(deleteTime * 1000, function()
-			theVehicles = getVehicles()
-			TriggerEvent("chatMessage", "[SERVER]", {0, 255, 0}, "All unoccupied vehicles have been deleted!")
-			for veh in theVehicles do
-				if ( DoesEntityExist( veh ) ) then 
-					if((GetPedInVehicleSeat(veh, -1)) == false) or ((GetPedInVehicleSeat(veh, -1)) == nil) or ((GetPedInVehicleSeat(veh, -1)) == 0)then
-						Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( veh ) )
-					end
-				end
-			end
-		end)
+		Wait(15 * 60000)
+		TriggerEvent("chatMessage", "[City]", {255, 255, 0}, "You can find Mr'SuicideSheep#8623 on discord @ https://discord.gg/a8KBSA4")
 	end
 end)
