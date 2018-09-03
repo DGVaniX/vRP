@@ -35,7 +35,7 @@ function string.random(Length, CharSet)
    end
 end
 
-over = false
+over = true
 theString = ""
 theReward = 0
 
