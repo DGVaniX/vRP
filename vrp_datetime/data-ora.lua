@@ -62,7 +62,7 @@ AddEventHandler("playerSpawned", function()
 	Citizen.CreateThread(function()
 		while true do
 			Wait(1)
-			year, month, dayOfWeek, hour, minute = GetUtcTime()
+			year, month, dayOfWeek, hour, minute = GetLocalTime()
 			timeAndDateString = "|"
 			CalculateTimeToDisplay()
 			if displayTime == true then
