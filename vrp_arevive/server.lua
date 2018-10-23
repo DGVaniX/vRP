@@ -19,7 +19,7 @@ local a_revive = {function(player,choice)
 					vRPclient.notify(nplayer,{"You have been revived by admin ~g~"..GetPlayerName(player)})
 					vRPclient.notify(player,{"You have revived ~g~"..GetPlayerName(nplayer)})
 				else
-					vRPclient.notify(player,{lang.emergency.menu.revive.not_in_coma()})
+					vRPclient.notify(player,{"~r~Player not in coma!"})
 				end
 			end)
 		else
