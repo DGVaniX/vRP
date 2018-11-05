@@ -23,6 +23,7 @@ local Proxy = module("vrp", "lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vRP_lscustoms")
 
+
 -- vehicle db
 MySQL.createCommand("vRP/lscustoms_columns", [[
 ALTER TABLE vrp_user_vehicles ADD IF NOT EXISTS veh_type varchar(255) NOT NULL DEFAULT 'default' ;
