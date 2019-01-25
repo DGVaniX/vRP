@@ -1,3 +1,13 @@
+local Tunnel = module("vrp", "lib/Tunnel")
+local Proxy = module("vrp", "lib/Proxy")
+local htmlEntities = module("vrp", "lib/htmlEntities")
+
+vRPajail = {}
+Tunnel.bindInterface("vRP_ajal",vRPajail)
+
+vRP = Proxy.getInterface("vRP")
+vRPclient = Tunnel.getInterface("vRP","vRP_ajal")
+
 local jX, jY, jZ = 1687.8145751953,2518.6625976563,-120.84989929199 -- JAIL POSITION
 
 local aUnjailed = {}
