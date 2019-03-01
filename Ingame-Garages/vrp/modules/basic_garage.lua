@@ -168,7 +168,7 @@ vRP.registerMenuBuilder("admin", function(add, data)
 		local choices = {}
 	
 		if vRP.hasPermission(user_id, "admin.createGarage") then
-			menu["Create Garage"] = {ch_createGarage}
+			choices["Create Garage"] = {ch_createGarage}
 		end
 		add(choices)
 	end
