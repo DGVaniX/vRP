@@ -162,17 +162,17 @@ local function ch_createGarage(player,choice)
 	end
 end
 
-vRP.registerMenuBuilder({"admin", function(add, data)
-	local user_id = vRP.getUserId({data.player})
+vRP.registerMenuBuilder("admin", function(add, data)
+	local user_id = vRP.getUserId(data.player)
 	if user_id ~= nil then
 		local choices = {}
 	
-		if vRP.hasPermission({user_id, "admin.createGarage"}) then
+		if vRP.hasPermission(user_id, "admin.createGarage") then
 			menu["Create Garage"] = {ch_createGarage}
 		end
 		add(choices)
 	end
-end})
+end)
 
 ------------------------------------------------------------------------
 
