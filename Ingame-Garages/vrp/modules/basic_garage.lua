@@ -29,152 +29,6 @@ local lang = vRP.lang
 --REMOVED
 --local garages = cfg.garages
 --
------------------ IN-GAME GARAGE SPAWN--------------------
-MySQL.createCommand("vRP/get_garages","SELECT * FROM vrp_garages")
-MySQL.createCommand("vRP/add_garage","INSERT INTO vrp_garages(x,y,z,gtype) VALUES(@x,@y,@z,@gtype)")
-
-garages = {}
-
-function initGarages()
-	MySQL.query("vRP/get_garages", {}, function(result, affected)
-		if(#result ~= 0)then
-			garages = result
-		end
-	end)
-end
-
-AddEventHandler("onResourceStart", function(res)
-	if(res == "vrp")then
-		Citizen.Wait(2000)
-		initGarages()		
-	end
-end)
-
-function vRP.spawnCreatedGarage(x, y, z, gtype)
-	local group = vehicle_groups[gtype]
-	if group then
-		local gcfg = group._config
-
-        -- enter
-        local garage_enter = function(player,area)
-          local user_id = vRP.getUserId(source)
-          if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
-            local menu = garage_menus[gtype]
-            if menu then
-              vRP.openMenu(player,menu)
-            end
-          end
-        end
-
-        -- leave
-        local garage_leave = function(player,area)
-          vRP.closeMenu(player)
-        end
-		
-		local garage_enter = function(player,area)
-			local user_id = vRP.getUserId(source)
-			if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
-				local menu = garage_menus[gtype]
-				if menu then
-					vRP.openMenu(player,menu)
-				end
-			end
-        end
-
-		-- leave
-		local garage_leave = function(player,area)
-			vRP.closeMenu(player)
-		end
-		
-		MySQL.query("vRP/add_garage", {x = x, y = y, z = z, gtype = gtype})
-		lastID = #garages + 1
-		
-		table.insert(garages, {x = x, y = y, z = z, gtype = gtype})
-		
-		users = vRP.getUsers()
-		for i, v in pairs(users) do
-			vRPclient.addMarker(v,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
-			vRPclient.addBlip(v,{x,y,z,gcfg.blipid,gcfg.blipcolor,lang.garage.title({gtype})})
-			vRP.setArea(v,"vRP:garage:"..lastID,x,y,z,1,1.5,garage_enter,garage_leave)
-		end
-	end
-end
-
-local function build_client_garages(source)
-	local user_id = vRP.getUserId(source)
-	if user_id ~= nil then
-		for i, v in pairs(garages) do
-			local x, y, z = v.x, v.y, v.z
-			local gtype = v.gtype
-			local group = vehicle_groups[gtype]
-			if group then
-				local gcfg = group._config
-
-				-- enter
-				local garage_enter = function(player,area)
-					local user_id = vRP.getUserId(source)
-					if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
-						local menu = garage_menus[gtype]
-						if menu then
-							vRP.openMenu(player,menu)
-						end
-					end
-				end
-
-				-- leave
-				local garage_leave = function(player,area)
-					vRP.closeMenu(player)
-				end
-
-				vRPclient.addBlip(source,{x,y,z,gcfg.blipid,gcfg.blipcolor,lang.garage.title({gtype})})
-				vRPclient.addMarker(source,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
-
-				vRP.setArea(source,"vRP:garage"..k,x,y,z,1,1.5,garage_enter,garage_leave)
-			end
-		end
-	end
-end
-
-AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)
-	if first_spawn then
-		build_client_garages(source)
-	end
-end)
-
-local function ch_createGarage(player,choice)
-	local user_id = vRP.getUserId(player)
-	if user_id ~= nil then
-		vRP.prompt(player,"Garage Type: ","",function(player,gType)
-			gType = tostring(gType)
-			if(gType ~= "") and (gType ~= nil)then
-				local group = vehicle_groups[gType]
-				if group then
-					vRPclient.getPosition(player,{},function(x,y,z)
-						x, y, z = x, y, z
-						vRP.spawnCreatedGarage(x, y, z, gType)
-						vRPclient.notify(player, {"~g~Garage created with type: ~y~"..gType})
-					end)
-				else
-					vRPclient.notify(player, {"~r~There is no garage with the type: ~y~"..gType})
-				end
-			end
-		end)
-	end
-end
-
-vRP.registerMenuBuilder("admin", function(add, data)
-	local user_id = vRP.getUserId(data.player)
-	if user_id ~= nil then
-		local choices = {}
-	
-		if vRP.hasPermission(user_id, "admin.createGarage") then
-			choices["Create Garage"] = {ch_createGarage}
-		end
-		add(choices)
-	end
-end)
-
-------------------------------------------------------------------------
 
 -- garage menus
 
@@ -414,6 +268,154 @@ for group,vehicles in pairs(vehicle_groups) do
     vRPclient.despawnGarageVehicle(player,{veh_type,15}) 
   end, lang.garage.store.description()}
 end
+
+----------------- IN-GAME GARAGE SPAWN--------------------
+MySQL.createCommand("vRP/get_garages","SELECT * FROM vrp_garages")
+MySQL.createCommand("vRP/add_garage","INSERT INTO vrp_garages(x,y,z,gtype) VALUES(@x,@y,@z,@gtype)")
+
+garages = {}
+
+function initGarages()
+	MySQL.query("vRP/get_garages", {}, function(result, affected)
+		if(#result ~= 0)then
+			garages = result
+		end
+	end)
+end
+
+AddEventHandler("onResourceStart", function(res)
+	if(res == "vrp")then
+		Citizen.Wait(2000)
+		initGarages()		
+	end
+end)
+
+function vRP.spawnCreatedGarage(x, y, z, gtype)
+	local group = vehicle_groups[gtype]
+	if group then
+		local gcfg = group._config
+
+        -- enter
+        local garage_enter = function(player,area)
+          local user_id = vRP.getUserId(source)
+          if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
+            local menu = garage_menus[gtype]
+            if menu then
+              vRP.openMenu(player,menu)
+            end
+          end
+        end
+
+        -- leave
+        local garage_leave = function(player,area)
+          vRP.closeMenu(player)
+        end
+		
+		local garage_enter = function(player,area)
+			local user_id = vRP.getUserId(source)
+			if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
+				local menu = garage_menus[gtype]
+				if menu then
+					vRP.openMenu(player,menu)
+				end
+			end
+        end
+
+		-- leave
+		local garage_leave = function(player,area)
+			vRP.closeMenu(player)
+		end
+		
+		MySQL.query("vRP/add_garage", {x = x, y = y, z = z, gtype = gtype})
+		lastID = #garages + 1
+		
+		table.insert(garages, {x = x, y = y, z = z, gtype = gtype})
+		
+		users = vRP.getUsers()
+		for i, v in pairs(users) do
+			vRPclient.addMarker(v,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
+			vRPclient.addBlip(v,{x,y,z,gcfg.blipid,gcfg.blipcolor,lang.garage.title({gtype})})
+			vRP.setArea(v,"vRP:garage:"..lastID,x,y,z,1,1.5,garage_enter,garage_leave)
+		end
+	end
+end
+
+local function build_client_garages(source)
+	local user_id = vRP.getUserId(source)
+	if user_id ~= nil then
+		for i, v in pairs(garages) do
+			local x, y, z = v.x, v.y, v.z
+			local gtype = v.gtype
+			local group = vehicle_groups[gtype]
+			if group then
+				local gcfg = group._config
+
+				-- enter
+				local garage_enter = function(player,area)
+					local user_id = vRP.getUserId(source)
+					if user_id ~= nil and vRP.hasPermissions(user_id,gcfg.permissions or {}) then
+						local menu = garage_menus[gtype]
+						if menu then
+							vRP.openMenu(player,menu)
+						end
+					end
+				end
+
+				-- leave
+				local garage_leave = function(player,area)
+					vRP.closeMenu(player)
+				end
+
+				vRPclient.addBlip(source,{x,y,z,gcfg.blipid,gcfg.blipcolor,lang.garage.title({gtype})})
+				vRPclient.addMarker(source,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
+
+				vRP.setArea(source,"vRP:garage"..k,x,y,z,1,1.5,garage_enter,garage_leave)
+			end
+		end
+	end
+end
+
+AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)
+	if first_spawn then
+		build_client_garages(source)
+	end
+end)
+
+local function ch_createGarage(player,choice)
+	local user_id = vRP.getUserId(player)
+	if user_id ~= nil then
+		vRP.prompt(player,"Garage Type: ","",function(player,gType)
+			gType = tostring(gType)
+			if(gType ~= "") and (gType ~= nil)then
+				local group = vehicle_groups[gType]
+				if group then
+					vRPclient.getPosition(player,{},function(x,y,z)
+						x, y, z = x, y, z
+						vRP.spawnCreatedGarage(x, y, z, gType)
+						vRPclient.notify(player, {"~g~Garage created with type: ~y~"..gType})
+					end)
+				else
+					vRPclient.notify(player, {"~r~There is no garage with the type: ~y~"..gType})
+				end
+			end
+		end)
+	end
+end
+
+vRP.registerMenuBuilder("admin", function(add, data)
+	local user_id = vRP.getUserId(data.player)
+	if user_id ~= nil then
+		local choices = {}
+	
+		if vRP.hasPermission(user_id, "admin.createGarage") then
+			choices["Create Garage"] = {ch_createGarage}
+		end
+		add(choices)
+	end
+end)
+
+------------------------------------------------------------------------
+
 
 -- VEHICLE MENU
 
