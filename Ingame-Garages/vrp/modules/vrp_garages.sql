@@ -14,9 +14,6 @@ CREATE TABLE `vrp_garages` (
   `x` float NOT NULL,
   `y` float NOT NULL,
   `z` float NOT NULL,
-  `bID` int(11) NOT NULL DEFAULT '0',
-  `bColor` int(11) NOT NULL DEFAULT '0',
-  `facion` int(11) NOT NULL DEFAULT '0',
   `gtype` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
