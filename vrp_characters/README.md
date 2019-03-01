@@ -1,4 +1,4 @@
-SCRIPT IS BUGGED!!!
+**SCRIPT IS BUGGED!!!**
 
 Sometimes you will see other player's characters or your characters will have other character's skin and/or name!
 
