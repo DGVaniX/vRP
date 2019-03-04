@@ -52,8 +52,10 @@ function loadInfoPickups()
 	end
 	
 	MySQL.query("vRP/get_all_users", {}, function(users, affected)
-		if(#users > 0)then
-			theUsers = users[1].id
+		if(#users > 0) and (users ~= nil)then
+			theUsers = tonumber(users[1].id)
+		else
+			theUsers = 0
 		end
 	end)
 end
