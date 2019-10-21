@@ -1,5 +1,6 @@
-# DGVaniX's Scripts for vRP
+# vRP Scripts Collection
 
-Here I'm the scripts that I made for FiveM vRP!
+A collection of scripts/system made for the FiveM multiplayer modification of Grand Theft Auto 5, for the vRP framework.
 
-Why buy the scripts from some idiot that only knows how to steal, instead of getting them for free from the legit author? :D
+Made By: DGVaniX
+Contributor: Muhammed Imran (khanmi@aston.ac.uk)
