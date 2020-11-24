@@ -29,6 +29,12 @@ GVEHICLES = {}
 local inrangeofgarage = false
 local currentlocation = nil
 
+local garages = {
+  {name="Garage", colour=3, id=357, x=215.124, y=-791.377, z=29.646, h=0.0},
+    {name="Garage", colour=3, id=357, x=-334.685, y=289.773, z=84.705, h=0.0},
+    {name="Garage", colour=3, id=357, x=-55.272, y=-1838.71, z=25.442, h=0.0},
+    {name="Garage", colour=3, id=357, x=126.434, y=6610.04, z=30.750, h=0.0},
+}
 
 vehicles = {}
 garageSelected = { {x=nil, y=nil, z=nil, h=nil}, }
