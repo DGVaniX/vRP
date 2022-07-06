@@ -51,8 +51,10 @@ Citizen.CreateThread(function()
 			TriggerEvent("chatMessage", "[SERVER]", {0, 255, 0}, "All unoccupied vehicles have been deleted!")
 			for veh in theVehicles do
 				if ( DoesEntityExist( veh ) ) then 
-					if((GetPedInVehicleSeat(veh, -1)) == false) or ((GetPedInVehicleSeat(veh, -1)) == nil) or ((GetPedInVehicleSeat(veh, -1)) == 0)then
-						Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( veh ) )
+					if not IsEntityAttached(veh) then
+						if((GetPedInVehicleSeat(veh, -1)) == false) or ((GetPedInVehicleSeat(veh, -1)) == nil) or ((GetPedInVehicleSeat(veh, -1)) == 0)then
+							Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( veh ) )
+						end
 					end
 				end
 			end
